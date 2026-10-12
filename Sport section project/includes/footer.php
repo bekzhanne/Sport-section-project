@@ -15,8 +15,8 @@
                     <a href="#">Map</a>
                 </div>
                 <div class="footer-socials">
-                    <a href="#" class="icon-link" aria-label="WhatsApp"><img src="static/img/whatsapp-icon.svg" alt=""></a>
-                    <a href="#" class="icon-link" aria-label="Instagram"><img src="static/img/instagram-icon.svg" alt=""></a>
+                    <a href="https://wa.me/77066868040" class="icon-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><img src="static/img/whatsapp-icon.svg" alt=""></a>
+                    <a href="https://www.instagram.com/kanattuly.br2/" class="icon-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="static/img/instagram-icon.svg" alt=""></a>
                 </div>
             </div>
             <div class="footer-bottom"><?= date('Y') ?> © kbtu-culturist.kz</div>

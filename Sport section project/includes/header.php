@@ -55,8 +55,8 @@ $pageTitle = $pageTitle ?? 'KBTU culturist';
                             <?php endif; ?>
                         </div>
                     </div>
-                    <a href="#" class="icon-link" aria-label="Instagram"><img src="static/img/instagram-icon.svg" alt=""></a>
-                    <a href="#" class="icon-link" aria-label="WhatsApp"><img src="static/img/whatsapp-icon.svg" alt=""></a>
+                    <a href="https://www.instagram.com/kanattuly.br2/" class="icon-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="static/img/instagram-icon.svg" alt=""></a>
+                    <a href="https://wa.me/77066868040" class="icon-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><img src="static/img/whatsapp-icon.svg" alt=""></a>
                     <div class="lang-switch">
                         <img src="static/img/globe-icon.svg" alt="">
                         <a href="#" class="active">EN</a>
@@ -121,8 +121,8 @@ $pageTitle = $pageTitle ?? 'KBTU culturist';
                     <a href="#">RU</a>
                 </div>
                 <div class="mobile-socials">
-                    <a href="#" class="icon-link" aria-label="Instagram"><img src="static/img/instagram-icon.svg" alt=""></a>
-                    <a href="#" class="icon-link" aria-label="WhatsApp"><img src="static/img/whatsapp-icon.svg" alt=""></a>
+                    <a href="https://www.instagram.com/kanattuly.br2/" class="icon-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><img src="static/img/instagram-icon.svg" alt=""></a>
+                    <a href="https://wa.me/77066868040" class="icon-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><img src="static/img/whatsapp-icon.svg" alt=""></a>
                 </div>
             </div>
         </aside>
