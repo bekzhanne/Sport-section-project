@@ -4,7 +4,7 @@ require __DIR__ . '/includes/db.php';
 
 require_login();
 
-$stmt = db()->prepare('SELECT id, name, email, created_at FROM users WHERE id = ?');
+$stmt = db()->prepare('SELECT id, name, email, phone, birth_date, created_at FROM users WHERE id = ?');
 $stmt->execute([current_user()['id']]);
 $profile = $stmt->fetch();
 
@@ -37,11 +37,20 @@ $bookingsStmt = db()->prepare(
 $bookingsStmt->execute([$profile['id']]);
 $bookings = $bookingsStmt->fetchAll();
 
+$messages = [
+    'updated' => ['success', 'Your profile has been updated.'],
+];
+$notice = $messages[$_GET['status'] ?? ''] ?? null;
+
 $pageTitle = 'My profile · KBTU culturist';
 require __DIR__ . '/includes/header.php';
 ?>
         <main class="profile-section">
             <div class="container">
+                <?php if ($notice): ?>
+                    <div class="form-alert <?= e($notice[0]) ?>" role="status"><?= e($notice[1]) ?></div>
+                <?php endif; ?>
+
                 <div class="auth-card profile-card">
                 <div class="profile-avatar"><img src="static/img/profile-icon.svg" alt=""></div>
                 <h1 class="auth-title"><?= e($profile['name']) ?></h1>
@@ -51,6 +60,19 @@ require __DIR__ . '/includes/header.php';
                     <dt>Member since</dt>
                     <dd><?= e(date('d.m.Y', strtotime($profile['created_at']))) ?></dd>
                 </dl>
+                <?php if ($profile['phone']): ?>
+                    <dl class="profile-details">
+                        <dt>Phone</dt>
+                        <dd><?= e($profile['phone']) ?></dd>
+                    </dl>
+                <?php endif; ?>
+                <?php if ($profile['birth_date']): ?>
+                    <dl class="profile-details">
+                        <dt>Date of birth</dt>
+                        <dd><?= e(date('d.m.Y', strtotime($profile['birth_date']))) ?></dd>
+                    </dl>
+                <?php endif; ?>
+                <a href="profile_edit.php" class="btn btn-outline-navy auth-submit">Edit profile</a>
                 </div>
 
                 <section class="profile-list">

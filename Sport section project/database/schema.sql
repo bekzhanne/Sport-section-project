@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
     name          VARCHAR(100) NOT NULL,
     email         VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    is_admin      TINYINT(1)   NOT NULL DEFAULT 0,
+    phone         VARCHAR(20)  NULL,
+    birth_date    DATE         NULL,
     created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uq_users_email (email)

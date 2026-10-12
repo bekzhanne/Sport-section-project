@@ -3,18 +3,35 @@ require __DIR__ . '/includes/session.php';
 require __DIR__ . '/includes/db.php';
 
 $userId = (int) (current_user()['id'] ?? 0);
-$stmt = db()->prepare(
-    "SELECT s.*,
-            COUNT(DISTINCT CASE WHEN m.status = 'active' THEN m.user_id END) AS active_members,
-            MAX(CASE WHEN m.user_id = ? AND m.status = 'active' THEN 1 ELSE 0 END) AS has_membership
-     FROM sports_sections s
-     LEFT JOIN section_memberships m ON m.section_id = s.id
-     WHERE s.is_active = 1
-     GROUP BY s.id
-     ORDER BY s.name"
-);
-$stmt->execute([$userId]);
+$query = trim((string) ($_GET['q'] ?? ''));
+$availableOnly = isset($_GET['available']);
+
+$sql = "SELECT s.*,
+               COUNT(DISTINCT CASE WHEN m.status = 'active' THEN m.user_id END) AS active_members,
+               MAX(CASE WHEN m.user_id = ? AND m.status = 'active' THEN 1 ELSE 0 END) AS has_membership
+        FROM sports_sections s
+        LEFT JOIN section_memberships m ON m.section_id = s.id
+        WHERE s.is_active = 1";
+$params = [$userId];
+
+if ($query !== '') {
+    $sql .= " AND (s.name LIKE ? OR s.instructor LIKE ? OR s.location LIKE ?)";
+    $like = '%' . $query . '%';
+    array_push($params, $like, $like, $like);
+}
+
+$sql .= " GROUP BY s.id ORDER BY s.name";
+
+$stmt = db()->prepare($sql);
+$stmt->execute($params);
 $sections = $stmt->fetchAll();
+
+if ($availableOnly) {
+    $sections = array_values(array_filter(
+        $sections,
+        fn (array $section): bool => (int) $section['active_members'] < (int) $section['capacity']
+    ));
+}
 
 $messages = [
     'joined' => ['success', 'You have joined the section. Choose a class from its schedule.'],
@@ -42,8 +59,18 @@ require __DIR__ . '/includes/header.php';
                     <div class="form-alert <?= e($notice[0]) ?>" role="status"><?= e($notice[1]) ?></div>
                 <?php endif; ?>
 
+                <form method="get" class="search-bar">
+                    <input type="search" name="q" class="form-input" placeholder="Search by name, instructor, or location" value="<?= e($query) ?>">
+                    <label class="search-checkbox">
+                        <input type="checkbox" name="available" value="1" <?= $availableOnly ? 'checked' : '' ?>>
+                        Available only
+                    </label>
+                    <button type="submit" class="btn btn-navy">Search</button>
+                    <?php if ($query !== '' || $availableOnly): ?><a class="text-link" href="sections.php">Clear</a><?php endif; ?>
+                </form>
+
                 <?php if (!$sections): ?>
-                    <div class="empty-state">There are no active sport sections yet.</div>
+                    <div class="empty-state"><?= $query !== '' || $availableOnly ? 'No sections match your search.' : 'There are no active sport sections yet.' ?></div>
                 <?php else: ?>
                     <div class="section-grid">
                         <?php foreach ($sections as $section): ?>

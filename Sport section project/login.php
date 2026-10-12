@@ -18,7 +18,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     } elseif ($email === '' || $password === '') {
         $error = 'Please enter your email and password.';
     } else {
-        $stmt = db()->prepare('SELECT id, name, email, password_hash FROM users WHERE email = ?');
+        $stmt = db()->prepare('SELECT id, name, email, password_hash, is_admin FROM users WHERE email = ?');
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -44,7 +44,7 @@ require __DIR__ . '/includes/header.php';
                     <div class="form-alert"><?= e($error) ?></div>
                 <?php endif; ?>
 
-                <form method="post" class="auth-form" novalidate>
+                <form method="post" id="login-form" class="auth-form" novalidate>
                     <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
 
                     <label class="form-group">

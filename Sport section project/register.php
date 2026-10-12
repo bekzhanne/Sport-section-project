@@ -9,6 +9,8 @@ if (is_logged_in()) {
 $firstName = '';
 $lastName = '';
 $email = '';
+$phone = '';
+$birthDate = '';
 $errors = [];
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
@@ -18,6 +20,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     $email = mb_strtolower(trim(post_string('email')));
     $password = post_string('password');
     $passwordConfirm = post_string('password_confirm');
+    $phone = trim(post_string('phone'));
+    $birthDate = trim(post_string('birth_date'));
 
     if (!verify_csrf()) {
         $errors['form'] = 'Your session has expired. Please try again.';
@@ -45,12 +49,23 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $errors['password_confirm'] = 'Passwords do not match.';
     }
 
+    if ($phone !== '' && !preg_match('/^[0-9+\s()-]{7,20}$/', $phone)) {
+        $errors['phone'] = 'Please enter a valid phone number.';
+    }
+
+    if ($birthDate !== '') {
+        $birthDateTime = DateTime::createFromFormat('Y-m-d', $birthDate);
+        if (!$birthDateTime || $birthDateTime->format('Y-m-d') !== $birthDate || $birthDateTime > new DateTime()) {
+            $errors['birth_date'] = 'Please enter a valid date of birth.';
+        }
+    }
+
     if (!$errors) {
         try {
-            $stmt = db()->prepare('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)');
-            $stmt->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT)]);
+            $stmt = db()->prepare('INSERT INTO users (name, email, password_hash, phone, birth_date) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT), $phone !== '' ? $phone : null, $birthDate !== '' ? $birthDate : null]);
 
-            login_user(['id' => db()->lastInsertId(), 'name' => $name, 'email' => $email]);
+            login_user(['id' => db()->lastInsertId(), 'name' => $name, 'email' => $email, 'is_admin' => false]);
             redirect('mp.php');
         } catch (PDOException $ex) {
             // 23000 = unique key violation on users.email
@@ -74,7 +89,7 @@ require __DIR__ . '/includes/header.php';
                     <div class="form-alert"><?= e($errors['form']) ?></div>
                 <?php endif; ?>
 
-                <form method="post" class="auth-form" novalidate>
+                <form method="post" id="register-form" class="auth-form" novalidate>
                     <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
 
                     <label class="form-group">
@@ -93,6 +108,18 @@ require __DIR__ . '/includes/header.php';
                         <span class="form-label">Email</span>
                         <input type="email" name="email" class="form-input<?= isset($errors['email']) ? ' is-invalid' : '' ?>" value="<?= e($email) ?>" autocomplete="email" required>
                         <?php if (isset($errors['email'])): ?><span class="form-error"><?= e($errors['email']) ?></span><?php endif; ?>
+                    </label>
+
+                    <label class="form-group">
+                        <span class="form-label">Phone number <span class="form-optional">(optional)</span></span>
+                        <input type="tel" name="phone" class="form-input<?= isset($errors['phone']) ? ' is-invalid' : '' ?>" value="<?= e($phone) ?>" autocomplete="tel" maxlength="20">
+                        <?php if (isset($errors['phone'])): ?><span class="form-error"><?= e($errors['phone']) ?></span><?php endif; ?>
+                    </label>
+
+                    <label class="form-group">
+                        <span class="form-label">Date of birth <span class="form-optional">(optional)</span></span>
+                        <input type="date" name="birth_date" class="form-input<?= isset($errors['birth_date']) ? ' is-invalid' : '' ?>" value="<?= e($birthDate) ?>" autocomplete="bday" max="<?= e(date('Y-m-d')) ?>">
+                        <?php if (isset($errors['birth_date'])): ?><span class="form-error"><?= e($errors['birth_date']) ?></span><?php endif; ?>
                     </label>
 
                     <label class="form-group">

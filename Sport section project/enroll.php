@@ -4,18 +4,6 @@ require __DIR__ . '/includes/db.php';
 
 require_login();
 
-function post_positive_int(string $key): ?int
-{
-    $value = $_POST[$key] ?? null;
-    if (!is_string($value) && !is_int($value)) {
-        return null;
-    }
-
-    $validated = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
-
-    return $validated === false ? null : (int) $validated;
-}
-
 function enrollment_redirect(int $sectionId, string $status): void
 {
     if ($sectionId > 0) {
