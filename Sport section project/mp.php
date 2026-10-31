@@ -76,57 +76,57 @@ require __DIR__ . '/includes/header.php';
                         <div class="swiper-wrapper">
                             <div class="swiper-slide review-card">
                                 <div class="stars"><span></span><span></span><span></span><span></span><span></span></div>
-                                <p class="review-text">Some comment or review</p>
+                                <p class="review-text">Joined the strength training section this semester and already feel the difference — the coach actually corrects your form instead of just counting reps.</p>
                                 <div class="review-author">
                                     <div class="avatar">
-                                        <img src="static/img/profile-icon.svg" alt="">
+                                        <img src="static/img/avatar-1.jpg" alt="">
                                         <span class="badge"><img src="static/img/instagram-icon.svg" alt=""></span>
                                     </div>
                                     <div>
-                                        <p class="author-name">John Doe</p>
-                                        <p class="author-role">Gym enjoyer</p>
+                                        <p class="author-name">Yerzhan Bolat</p>
+                                        <p class="author-role">Strength training</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="swiper-slide review-card">
                                 <div class="stars"><span></span><span></span><span></span><span></span><span></span></div>
-                                <p class="review-text">Some comment or review</p>
+                                <p class="review-text">Yoga sessions are a great reset between lectures. Small groups, calm studio, and booking a class through the site takes ten seconds.</p>
                                 <div class="review-author">
                                     <div class="avatar">
-                                        <img src="static/img/profile-icon.svg" alt="">
+                                        <img src="static/img/avatar-2.jpg" alt="">
                                         <span class="badge"><img src="static/img/whatsapp-icon.svg" alt=""></span>
                                     </div>
                                     <div>
-                                        <p class="author-name">Jane Doe</p>
-                                        <p class="author-role">Yoga fan</p>
+                                        <p class="author-name">Aigerim Nurlanova</p>
+                                        <p class="author-role">Yoga</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="swiper-slide review-card">
                                 <div class="stars"><span></span><span></span><span></span><span></span><span></span></div>
-                                <p class="review-text">Some good review</p>
+                                <p class="review-text">Been boxing here for two months. Coach Daniyar is strict about technique but the whole group pushes each other, it never feels like a chore.</p>
                                 <div class="review-author">
                                     <div class="avatar">
-                                        <img src="static/img/profile-icon.svg" alt="">
+                                        <img src="static/img/avatar-3.jpg" alt="">
                                         <span class="badge"><img src="static/img/instagram-icon.svg" alt=""></span>
                                     </div>
                                     <div>
-                                        <p class="author-name">Jack Doe</p>
-                                        <p class="author-role">Powerlifter</p>
+                                        <p class="author-name">Damir Seitkali</p>
+                                        <p class="author-role">Boxing</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="swiper-slide review-card">
                                 <div class="stars"><span></span><span></span><span></span><span></span><span></span></div>
-                                <p class="review-text">Some comment or review</p>
+                                <p class="review-text">Switched from a commercial gym to the functional fitness section — cheaper, closer to campus, and the circuits never get boring.</p>
                                 <div class="review-author">
                                     <div class="avatar">
-                                        <img src="static/img/profile-icon.svg" alt="">
+                                        <img src="static/img/avatar-4.jpg" alt="">
                                         <span class="badge"><img src="static/img/whatsapp-icon.svg" alt=""></span>
                                     </div>
                                     <div>
-                                        <p class="author-name">Jill Doe</p>
-                                        <p class="author-role">Runner</p>
+                                        <p class="author-name">Dana Ospanova</p>
+                                        <p class="author-role">Functional fitness</p>
                                     </div>
                                 </div>
                             </div>
@@ -141,17 +141,17 @@ require __DIR__ . '/includes/header.php';
                     <h2 class="section-title">News</h2>
                     <div class="news-grid">
                         <a href="#" class="news-card">
-                            <div class="news-img"></div>
+                            <div class="news-img"><img src="static/img/news-1.jpg" alt=""></div>
                             <h3>Which protein should you choose to achieve your goals?</h3>
                             <time datetime="2026-01-01">01.01.2026</time>
                         </a>
                         <a href="#" class="news-card">
-                            <div class="news-img"></div>
+                            <div class="news-img"><img src="static/img/news-2.jpg" alt=""></div>
                             <h3>Almaty Marathon 2026 by Kaspi</h3>
                             <time datetime="2026-01-01">01.01.2026</time>
                         </a>
                         <a href="#" class="news-card">
-                            <div class="news-img"></div>
+                            <div class="news-img"><img src="static/img/news-3.jpg" alt=""></div>
                             <h3>Creatine: Benefits and Uses</h3>
                             <time datetime="2026-01-01">01.01.2026</time>
                         </a>
